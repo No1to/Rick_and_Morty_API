@@ -1,26 +1,28 @@
 package com.example.rick_and_morty_api.ui.activity.character
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.rick_and_morty_api.CartoonCharacter
+import com.example.rick_and_morty_api.CartoonModel
 import com.example.rick_and_morty_api.R
-import com.example.rick_and_morty_api.databinding.ActivityDetailsBinding
+import com.example.rick_and_morty_api.databinding.ActivityCharacterBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CharacterActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailsBinding
+    private lateinit var binding: ActivityCharacterBinding
     private val viewModel by lazy {
         ViewModelProvider(this)[CharacterViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailsBinding.inflate(layoutInflater)
+        binding = ActivityCharacterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val id = intent.getIntExtra(CHARACTER_ID_ARG, 0)
@@ -30,18 +32,25 @@ class CharacterActivity : AppCompatActivity() {
                 setCharacterData(it)
             }
         }
+
     }
 
-    private fun setCharacterData(it: CartoonCharacter) = with(binding) {
-        Log.e("ololo", "Data is not null")
+    private fun setCharacterData(it: CartoonModel) = with(binding) {
         tvCharacterName.text = it.name
-        tvStatus.text = it.status
-        Glide.with(imageCharacter).load(it.image).into(imageCharacter)// load(it.image).circleCrop()
+        tvCharacterStatus.text = it.status
+        tvGenderAnswer.text = it.gender
+        tvCharacterLocation.text = it.location.name
+        tvCharacterSpecies.text = it.species
+        tvCharacterFirstSeen.text = it.origin.name
+
+        Glide.with(ivCharacterImage).load(it.image)
+            .into(ivCharacterImage)// load(it.image).circleCrop()
+
 
         when (it.status) {
-            "Alive" -> binding.circleStatus.setBackgroundResource(R.drawable.bg_green_circle)
-            "Dead" -> binding.circleStatus.setBackgroundResource(R.drawable.bg_red_circle)
-            "unknown" -> binding.circleStatus.setBackgroundResource(R.drawable.bg_circle)
+            "Alive" -> binding.ivCharacterStatus.setBackgroundResource(R.drawable.bg_green_circle)
+            "Dead" -> binding.ivCharacterStatus.setBackgroundResource(R.drawable.bg_red_circle)
+            "unknown" -> binding.ivCharacterStatus.setBackgroundResource(R.drawable.bg_grey_circle)
         }
     }
 

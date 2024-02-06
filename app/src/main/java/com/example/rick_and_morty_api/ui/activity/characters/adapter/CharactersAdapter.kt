@@ -4,19 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.rick_and_morty_api.CartoonCharacter
+import com.example.rick_and_morty_api.CartoonModel
 import com.example.rick_and_morty_api.R
-import com.example.rick_and_morty_api.databinding.ItemCharacterCardBinding
+import com.example.rick_and_morty_api.databinding.ItemCardBinding
 
 class CharactersAdapter(private val onCharacterClick: (Int) -> Unit) :
     RecyclerView.Adapter<CharacterViewHolder>() {
 
-    private var charactersList = listOf<CartoonCharacter>()
+    private var charactersList = listOf<CartoonModel>()
 //    private var characters: List<CartoonCharacter> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val binding =
-            ItemCharacterCardBinding.inflate(
+            ItemCardBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -30,10 +30,10 @@ class CharactersAdapter(private val onCharacterClick: (Int) -> Unit) :
     override fun getItemCount(): Int = charactersList.size
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.OnBind(charactersList[position])
+        holder.onBind(charactersList[position])
     }
 
-    fun setCharacter(list: List<CartoonCharacter>) {
+    fun setCharacters(list: List<CartoonModel>) {
         charactersList = list
         notifyDataSetChanged()
     }
@@ -41,24 +41,29 @@ class CharactersAdapter(private val onCharacterClick: (Int) -> Unit) :
 }
 
 class CharacterViewHolder(
-    private val binding: ItemCharacterCardBinding,
+    private val binding: ItemCardBinding,
     private val onCharacterClick: (Int) -> Unit,
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun OnBind(character: CartoonCharacter) {
-        binding.tvName.text = character.name
-        binding.tvStatus.text = character.status
-        Glide.with(binding.ivChar).load(character.image).into(binding.ivChar)
+    fun onBind(character: CartoonModel) {
+        with(binding) {
+            tvCharacterName.text = character.name
+            tvCharacterStatus.text = character.status
+            tvCharacterLocation.text = character.location.name
+            tvCharacterSpecies.text = character.species
 
-        binding.cardView.setOnClickListener {
-            onCharacterClick(character.characterId)
-        }
+            Glide.with(binding.ivCharacter).load(character.image).into(binding.ivCharacter)
 
-        when (character.status) {
-            "Alive" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.bg_green_circle)
-            "Dead" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.bg_red_circle)
-            "unknown" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.bg_circle)
+            itemCharacterContent.setOnClickListener {
+                onCharacterClick(character.characterId)
+            }
+
+            when (character.status) {
+                "Alive" -> binding.ivCharacterStatus.setBackgroundResource(R.drawable.bg_green_circle)
+                "Dead" -> binding.ivCharacterStatus.setBackgroundResource(R.drawable.bg_red_circle)
+                "unknown" -> binding.ivCharacterStatus.setBackgroundResource(R.drawable.bg_grey_circle)
+            }
         }
     }
 

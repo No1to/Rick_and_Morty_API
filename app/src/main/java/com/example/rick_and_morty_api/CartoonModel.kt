@@ -3,17 +3,22 @@ package com.example.rick_and_morty_api
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class BaseResponse<T>(
+/*data class BaseResponse<T>(
     var results: List<T>
+) : Serializable*/
+
+data class CharacterResponse(
+    var results: List<CartoonModel>
 ) : Serializable
 
-data class CartoonCharacter(
+data class CartoonModel(
     @SerializedName("id")
     var characterId: Int,
     var name: String,
     var status: String,
     var image: String,
     var species: String,
+    var gender:String,
     var origin: Origin,
     var location: Location,
 ) : Serializable

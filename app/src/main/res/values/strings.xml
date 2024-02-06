@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Rick and Morty API</string>
+
+    <string name="name">Name</string>
+    <string name="status">Status</string>
+    <string name="last_known_location">Last known location:</string>
+    <string name="first_seen_in">First seen in:</string>
+    <string name="unknown">Unknown</string>
+    <string name="character_id">Character ID</string>
+    <string name="search">Search</string>
+    <string name="air_date_">Air Date:</string>
+    <string name="air_date">Air Date</string>
+    <string name="name_">Name:</string>
+    <string name="episode">Episode</string>
+    <string name="season">Season</string>
+    <string name="minus">-</string>
+    <string name="species">Species</string>z
 </resources>

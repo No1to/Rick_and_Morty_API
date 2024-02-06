@@ -6,7 +6,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue_grey">#272B33</color>
-    <color name="grey">#3C3E44</color>
-    <color name="red">#DC145F</color>
-    <color name="green">#39DC14</color>
+    <color name="grey">#808080</color>
+    <color name="rick_grey">#AEAEAE</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
+    <color name="background">#272B33</color>
+    <color name="dark">#3C3E44</color>
+<!--    <color name="grey">#89898B</color>-->
+
 </resources>
