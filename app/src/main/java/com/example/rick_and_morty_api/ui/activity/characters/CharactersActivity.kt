@@ -2,12 +2,15 @@ package com.example.rick_and_morty_api.ui.activity.characters
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rick_and_morty_api.databinding.ActivityCharactersBinding
 import com.example.rick_and_morty_api.ui.activity.character.CharacterActivity
 import com.example.rick_and_morty_api.ui.activity.characters.adapter.CharactersAdapter
+import com.example.rick_and_morty_api.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,8 +32,22 @@ class CharactersActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupRecyclerView()
 
-        viewModel.getCharacters().observe(this) { characters ->
-            charactersAdapter.setCharacters(characters)
+        viewModel.getCharacters().observe(this) { state ->
+            binding.progressCircular.isVisible = state is Resource.Loading
+            when (state) {
+                is Resource.Error -> {
+                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is Resource.Loading -> {
+                }
+
+                is Resource.SuccLoading -> {
+                    if (state.data != null) {
+                        charactersAdapter.setCharacters(state.data)
+                    }
+                }
+            }
         }
     }
 
@@ -55,10 +72,6 @@ class CharactersActivity : AppCompatActivity() {
         /*val intent = Intent(this, CharacterActivity::class.java)
           intent.putExtra(AnyClass.CHARACTER_ID_ARG, characterId)
           startActivity(intent)*/
-    }
-
-    companion object {
-        const val CHARACTER_ID_NAVIGATE = "characterId"
     }
 
 }

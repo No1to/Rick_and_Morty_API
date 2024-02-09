@@ -3,6 +3,7 @@ package com.example.rick_and_morty_api
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.rick_and_morty_api.utils.Resource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -10,22 +11,30 @@ import javax.inject.Inject
 
 class CartoonRepository @Inject constructor(private val api: CartoonApiService) {
 
-    fun getCharacters(): MutableLiveData<List<CartoonModel>> {
+    fun getCharacters(): MutableLiveData<Resource<List<CartoonModel>>> {
+        val characters = MutableLiveData<Resource<List<CartoonModel>>>()
+        characters.postValue(Resource.Loading())
 
-        val characters = MutableLiveData<List<CartoonModel>>()
         api.getCharacters().enqueue(object : Callback<CharacterResponse> {
             override fun onResponse(
                 call: Call<CharacterResponse>,
                 response: Response<CharacterResponse>
             ) {
-                if (response.isSuccessful && response.body() != null) {
+                if (response.isSuccessful && response.body() != null && response.code() in 200..300) {
                     response.body()?.let {
-                        characters.postValue(it.results)
+                        characters.postValue(
+                            Resource.SuccLoading
+                            /***/
+                                (it.results)
+                        )
                     }
                 }
             }
 
             override fun onFailure(call: Call<CharacterResponse>, t: Throwable) {
+                characters.postValue(
+                    Resource.Error(/*t.localizedMessage or ->*/t.message ?: "Unknown error!")
+                )
                 Log.e("noito", t.message.toString())
             }
 
