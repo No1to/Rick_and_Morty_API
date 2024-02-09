@@ -83,4 +83,8 @@ dependencies {
     // CircleImageView
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
+    // Koin frame
+    val koin_version = "3.5.0"
+    implementation("io.insert-koin:koin-android:$koin_version")
+
 }

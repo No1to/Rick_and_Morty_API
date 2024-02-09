@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:maxLines="1"
-            android:text="@string/last_known_location"
+            android:text="@string/gender"
             android:textColor="@color/rick_grey"
             android:textSize="14sp" />
 

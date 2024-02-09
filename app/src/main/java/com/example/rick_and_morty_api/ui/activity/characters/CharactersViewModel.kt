@@ -5,12 +5,16 @@ import androidx.lifecycle.ViewModel
 import com.example.rick_and_morty_api.CartoonModel
 import com.example.rick_and_morty_api.CartoonRepository
 import com.example.rick_and_morty_api.utils.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class CharactersViewModel @Inject constructor(private val repository: CartoonRepository) :
-    ViewModel() {
+class CharactersViewModel(private val repository: CartoonRepository) : ViewModel() {
+
+/*
+class CharactersViewModel() : ViewModel() {
+    private val repository: CartoonRepository by inject(CartoonRepository::class.java)
+    или
+
+}
+*/
 
     fun getCharacters(): LiveData<Resource<List<CartoonModel>>> {
         return repository.getCharacters()

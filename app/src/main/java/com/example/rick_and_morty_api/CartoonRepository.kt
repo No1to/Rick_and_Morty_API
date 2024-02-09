@@ -7,9 +7,8 @@ import com.example.rick_and_morty_api.utils.Resource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
-class CartoonRepository @Inject constructor(private val api: CartoonApiService) {
+class CartoonRepository (private val api: CartoonApiService) {
 
     fun getCharacters(): MutableLiveData<Resource<List<CartoonModel>>> {
         val characters = MutableLiveData<Resource<List<CartoonModel>>>()

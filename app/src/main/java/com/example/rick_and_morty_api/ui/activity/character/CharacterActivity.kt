@@ -1,24 +1,19 @@
 package com.example.rick_and_morty_api.ui.activity.character
 
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.rick_and_morty_api.CartoonModel
 import com.example.rick_and_morty_api.R
 import com.example.rick_and_morty_api.databinding.ActivityCharacterBinding
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class CharacterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCharacterBinding
-    private val viewModel by lazy {
-        ViewModelProvider(this)[CharacterViewModel::class.java]
-    }
+
+    // import org.koin.androidx.viewmodel.ext.android.viewModel
+    private val viewModel: CharacterViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

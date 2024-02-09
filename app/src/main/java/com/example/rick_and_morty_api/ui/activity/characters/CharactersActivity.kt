@@ -5,23 +5,25 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rick_and_morty_api.databinding.ActivityCharactersBinding
 import com.example.rick_and_morty_api.ui.activity.character.CharacterActivity
 import com.example.rick_and_morty_api.ui.activity.characters.adapter.CharactersAdapter
 import com.example.rick_and_morty_api.utils.Resource
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class CharactersActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCharactersBinding
-    private val viewModel by lazy {
-        ViewModelProvider(this)[CharactersViewModel::class.java]
-    }
+    /*private val viewModel by lazy {
+         ViewModelProvider(this)[CharactersViewModel::class.java]
+     }*/
 
-    //     private val charactersAdapter = CharactersAdapter(this::onClickItem)
+    // import org.koin.androidx.viewmodel.ext.android.viewModel
+    private val viewModel by viewModel<CharactersViewModel>()
+    // private val viewModel: CharactersViewModel by viewModels()
+
+    // private val charactersAdapter = CharactersAdapter(this::onClickItem)
     private val charactersAdapter by lazy {
         CharactersAdapter(this::onClickItem)
     }
