@@ -44,7 +44,7 @@ class CharactersActivity : AppCompatActivity() {
 
                 is Resource.SuccLoading -> {
                     if (state.data != null) {
-                        charactersAdapter.setCharacters(state.data)
+                        charactersAdapter.submitList(state.data)
                     }
                 }
             }
