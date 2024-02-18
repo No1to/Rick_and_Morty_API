@@ -1,16 +1,36 @@
 package com.example.rick_and_morty_api
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.rick_and_morty_api.utils.Resource
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class CartoonRepository (private val api: CartoonApiService) {
+class CartoonRepository(private val api: CartoonApiService): BaseRepository() {
 
-    fun getCharacters(): MutableLiveData<Resource<List<CartoonModel>>> {
+    fun getCharacters(): LiveData<Resource<CharacterResponse>> = doRequest {
+        api.getCharacters()
+    }
+
+    fun getCharacter(id: Int): LiveData<Resource<CartoonModel>> = doRequest {
+        api.getCharacter(id)
+    }
+
+}
+    /*fun getCharacter(id: Int): LiveData<Resource<CartoonModel>> {
+        return liveData(Dispatchers.IO) {
+            emit(Resource.Loading())
+            try {
+                val response = api.getCharacter(id)
+                if (response.isSuccessful && response.body() != null && response.code() in 200..300) {
+                    response.body()?.let {
+                        emit(Resource.SuccLoading(it))
+                    }
+                }
+            } catch (io: IOError) {
+                emit(Resource.Error(io.message ?: "Error!"))
+            }
+        }
+    }*/
+
+    /*fun getCharacters(): MutableLiveData<Resource<List<CartoonModel>>> {
         val characters = MutableLiveData<Resource<List<CartoonModel>>>()
         characters.postValue(Resource.Loading())
 
@@ -23,7 +43,6 @@ class CartoonRepository (private val api: CartoonApiService) {
                     response.body()?.let {
                         characters.postValue(
                             Resource.SuccLoading
-                            /***/
                                 (it.results)
                         )
                     }
@@ -59,6 +78,4 @@ class CartoonRepository (private val api: CartoonApiService) {
             }
         })
         return characterLv
-    }
-
-}
+    }*/

@@ -1,17 +1,16 @@
-package com.example.rick_and_morty_api
+package com.example.rick_and_morty_api.di
 
-import com.example.rick_and_morty_api.ui.activity.character.CharacterViewModel
-import com.example.rick_and_morty_api.ui.activity.characters.CharactersViewModel
+import com.example.rick_and_morty_api.BuildConfig
+import com.example.rick_and_morty_api.CartoonApiService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-val cartoonModule = module {
+val networkModule = module {
 
     single {
         provideInterceptor()
@@ -28,19 +27,6 @@ val cartoonModule = module {
     single {
         provideCartoonApiService(get())
     }
-
-    single {
-        CartoonRepository(get())
-    }
-
-    viewModel {
-        CharactersViewModel(get())
-    }
-
-    viewModel {
-        CharacterViewModel(get())
-    }
-
 }
 
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {

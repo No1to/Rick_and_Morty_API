@@ -8,14 +8,6 @@
     android:background="@color/blue_grey"
     tools:context=".ui.activity.characters.CharactersActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"
-        app:spanCount="2"
-        tools:listitem="@layout/item_card" />
-
     <ProgressBar
         android:id="@+id/progress_circular"
         android:layout_width="wrap_content"
@@ -23,5 +15,13 @@
         android:layout_gravity="center"
         android:visibility="gone"
         tools:progress="82" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        app:spanCount="2"
+        tools:listitem="@layout/item_card" />
 
 </FrameLayout>

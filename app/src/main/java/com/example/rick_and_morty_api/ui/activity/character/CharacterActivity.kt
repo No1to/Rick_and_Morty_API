@@ -1,14 +1,18 @@
 package com.example.rick_and_morty_api.ui.activity.character
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.rick_and_morty_api.BaseActivity
 import com.example.rick_and_morty_api.CartoonModel
-import com.example.rick_and_morty_api.R
 import com.example.rick_and_morty_api.databinding.ActivityCharacterBinding
+import com.example.rick_and_morty_api.utils.Resource
+import com.example.rick_and_morty_api.utils.Status
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.Locale
 
-class CharacterActivity : AppCompatActivity() {
+class CharacterActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCharacterBinding
 
@@ -22,11 +26,24 @@ class CharacterActivity : AppCompatActivity() {
 
         val id = intent.getIntExtra(CHARACTER_ID_ARG, 0)
 
-        viewModel.getData(id).observe(this) {
+        /*viewModel.getData(id).observe(this) {
+            it?.let {
+                observeData(it)
+            }
+        }*/
+        /*viewModel.getCharacter(id).observe(this) {
             it?.let {
                 setCharacterData(it)
             }
-        }
+        }*/
+        viewModel.characterLv.observeResource(
+            success = {
+                setCharacterData(it)
+            },
+            state = {  }
+        )
+
+        viewModel.getData(id)
 
     }
 
@@ -41,12 +58,24 @@ class CharacterActivity : AppCompatActivity() {
         Glide.with(ivCharacterImage).load(it.image)
             .into(ivCharacterImage)// load(it.image).circleCrop()
 
+        when (Status.valueOf(it.status.uppercase(Locale.getDefault()))) {
+            Status.ALIVE -> binding.ivCharacterStatus.setBackgroundResource(
+                Status.ALIVE.drawableResource
+            )
 
-        when (it.status) {
+            Status.DEAD -> binding.ivCharacterStatus.setBackgroundResource(
+                Status.DEAD.drawableResource
+            )
+
+            Status.UNKNOWN -> binding.ivCharacterStatus.setBackgroundResource(
+                Status.UNKNOWN.drawableResource
+            )
+        }
+        /*when (it.status) {
             "Alive" -> binding.ivCharacterStatus.setBackgroundResource(R.drawable.bg_green_circle)
             "Dead" -> binding.ivCharacterStatus.setBackgroundResource(R.drawable.bg_red_circle)
             "unknown" -> binding.ivCharacterStatus.setBackgroundResource(R.drawable.bg_grey_circle)
-        }
+        }*/
     }
 
     companion object {
